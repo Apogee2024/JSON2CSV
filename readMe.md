@@ -6,8 +6,9 @@ This microservice converts JSON data into CSV format. The service provides optio
 ## Running the Microservice with Docker
 
 To build and run the microservice using Docker, follow these steps:
+### Step 0: download the repo as a zip, extract it and open the folder in the terminal
 
-### Step 1: Build the Docker Image
+### Step 1: Build the Docker Image after cd ing into the correct 
 
 Use this command to build the Docker image:
 
@@ -25,7 +26,7 @@ Once the image is built, you can run it as a container:
 docker run -p 3010:3010 csv-service-app
 ```
 
-- **Explanation**: This command starts a container from the `csv-service-app` image, mapping port `3010` on the container to port `3010` on your local machine. This allows you to access the microservice at `http://localhost:3010`.
+- **Explanation**: This command starts a container from the `csv-service-app` image, mapping port `3010` on the container to port `3010` on your local machine. This allows you to access the microservice at `http://localhost:3010`. You can map it to any port that you want.
 
 ## API Endpoint
 
