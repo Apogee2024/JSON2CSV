@@ -1,0 +1,1 @@
+docker run -p 3010:3010 sprint2-app

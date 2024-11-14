@@ -1,0 +1,11 @@
+version: '3'
+services:
+  my-express-app:
+    image: sprint2-app
+    ports:
+      - "3010:3010"
+    ulimits:
+      nproc: 1024
+      nofile:
+        soft: 65535
+        hard: 65535
