@@ -170,3 +170,6 @@ The microservice responds with a CSV file or raw CSV data based on the `response
 ### Important Note
 
 A `POST` request cannot immediately send a downloadable file as a response. Instead, the response can either provide raw CSV text or return data that can be processed into a downloadable file on the client side. This is why the `response_type` option is provided: setting `response_type` to `"file"` sends a response with headers to suggest a download, while `"raw"` sends CSV data as plain text. The client-side application is then responsible for triggering the download if necessary. see the example with axios
+
+### Communication Contract
+All communications will be responded to within 72 hours, preferably on teams.
