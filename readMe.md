@@ -175,5 +175,7 @@ A `POST` request cannot immediately send a downloadable file as a response. Inst
 ### Communication Contract
 All communications will be responded to within 72 hours, preferably on teams.
 
+UML sequence diagram
+
 ![image](https://github.com/user-attachments/assets/6fb57c3f-dd1d-4dac-bdf5-867587af0a68)
 
