@@ -60,27 +60,29 @@ app.post('/export-data', (req, res) => {
     
         // Check the response type to decide the format
         if (response_type === 'file') {
-            let sanitizeFileName = (name) => {
+            let checkFileName = (name) => {
                 //remove all invalid characters, restrict to lowercase chars
-                let sanitized = name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
-                return sanitized.replace(/^_+|_+$/g, ''); 
+                let checked = name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+                return checked.replace(/^_+|_+$/g, ''); 
             };
             // to specify the filename
             let fileName;
 
             if (req.body.filename) {
-                fileName = sanitizeFileName(req.body.filename);
+                fileName = checkFileName(req.body.filename);
             } else {
                 fileName = 'data';
             }
-            if (!fileName || /^_+$/.test(fileName)) {  // Check if filename is empty or all underscores
+            // if fileName not specified
+            if (!fileName || /^_+$/.test(fileName)) {  
                 fileName = 'data.csv';
             } else {
+                // add csv to end of filename
                 fileName += '.csv';
             }
                 res.setHeader('Content-Type', 'text/csv');
+                // for downloading
                 res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
-
 
                 res.setHeader('Cache-Control', 'no-store');
                 return res.status(200).send(csvData);
