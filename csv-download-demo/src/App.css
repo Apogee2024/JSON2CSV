@@ -1,0 +1,120 @@
+#root {
+  margin: auto;
+  padding: 2rem;
+  text-align: center;
+  background-color: #E7F4F9;
+  min-width: 400px;
+}
+
+.app {
+  background-color: #E7F4F9;
+}
+
+
+
+.collection-item {
+  border: 2px solid rgb(202, 200, 89);
+  border-radius: 8px;
+  width: 600px;
+  margin-top: 16px;
+}
+
+a {
+  color: white;
+}
+
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #E7F4F9;
+  color: #9900c4;
+  margin: 1%;
+  padding: 2%;
+}
+
+a {
+  font-weight: 500;
+  color: #00089a;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+a:hover {
+  color: #535bf2;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  background-color: #5034ff;
+  transition: 0.25s;
+}
+
+button:hover {
+  border-color: #360036;
+  transition: .1s;
+  background-color: #C8A2C8;
+  color: black;
+}
+
+tr {
+
+}
+th {
+  
+}
+
+input {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout/Aligning_items_in_a_flex_container */
+.table-container {
+  padding: 1.5em;
+
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+}
+
+/* // i want shared borders https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse */
+table{
+  border-collapse: collapse;
+}
+tr{
+  border: 1px solid blueviolet; /* Border around each row */
+  padding: .1em;
+  min-width: 10%;
+ 
+}
+th, td {
+  border: 1px solid blueviolet; /* Ensure consistent borders across all table cells */
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: .1em;
+  padding-bottom: .1em;
+
+
+}

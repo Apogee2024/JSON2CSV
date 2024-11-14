@@ -78,9 +78,13 @@ app.post('/export-data', (req, res) => {
             } else {
                 fileName += '.csv';
             }
-                res.header('Content-Type', 'text/csv');
-                res.attachment('data.csv');
+                res.setHeader('Content-Type', 'text/csv');
+                res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
+
+
+                res.setHeader('Cache-Control', 'no-store');
                 return res.status(200).send(csvData);
+            
         } else {
             res.header('Content-Type', 'text/plain');
             return res.status(299).send(csvData);

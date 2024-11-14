@@ -24,4 +24,4 @@ curl -X POST http://localhost:3010/export-data \
         ],
         "headers": false,
         "filename":"data_export"
-    }' -o Headers.csv
+    }' -o 
