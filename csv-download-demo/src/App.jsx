@@ -24,7 +24,7 @@ const App = () => {
       "Amount": "12345.67"
   }
   ];
-
+// code taken from here https://javascript.plainenglish.io/download-pdf-from-api-in-reactjs-using-axios-and-blobs-699be8a27ca7
   const handleDownload = () => {
     axios.post("/export-data", {
       response_type: "file",

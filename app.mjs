@@ -7,6 +7,7 @@ const app = express();  // Initialize the app
 
 // necessary for processing JSON
 app.use(express.json({
+    limit: '10mb',
     strict: true,
     verify: (req, res, buf, encoding) => {
         try {
@@ -20,7 +21,6 @@ app.use(express.json({
 
 app.post('/export-data', (req, res) => {
     let data;
-    let file = req.body.filename;
 
     // initialize default state of response type
     let response_type = 'file';
