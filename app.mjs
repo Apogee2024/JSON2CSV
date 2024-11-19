@@ -52,9 +52,8 @@ app.post('/export-data', (req, res) => {
         if (headers) {
             fields = Object.keys(data[0]);
         }
-
+        // define options, parser and data
         const options = { fields, header: headers};
-        const parser = new Parser(options);
         const json2csvParser = new Parser(options);
         const csvData = json2csvParser.parse(data);
     
