@@ -17,29 +17,75 @@ app.use(express.json({
             throw new Error("Invalid JSON format.");  // Prevents further middleware execution
         }
     }
-})); 
+}));
 
-app.post('/export-data', (req, res) => {
-    let data;
-
+function bodyValidation(body) {
     // initialize default state of response type
     let response_type = 'file';
-    if (req.body.response_type == 'raw'){
+    if (body.response_type == 'raw'){
         response_type = 'raw';
     }
-    // js doesnt have tuples to convert the tuples to an array
-    if (req.body.data){
-         data = Array.from(req.body.data);
-    }
-    else {
-         data = Array.from([])
-    }
-
     // set default headers value
     let headers = true;
-    if (req.body.headers == false){
+    if (body.headers == false){
         headers = false;
     }
+    return response_type, headers
+}
+
+function convertToArray(body) {
+    let data;
+    // js doesnt have tuples to convert the tuples to an array
+    if (body.data){
+        data = Array.from(req.body.data);
+    }
+    else {
+        data = Array.from([])
+    }
+    return data;
+}
+
+function checkFileName(name) {
+    //remove all invalid characters, restrict to lowercase chars
+    let checked = name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+    return checked.replace(/^_+|_+$/g, '');
+}
+
+function fileNameValidation(body) {
+    let fileName;
+    if (body.filename) {
+        fileName = checkFileName(body.filename);
+    } else {
+        fileName = 'data';
+    }
+    // if fileName not specified
+    if (!fileName || /^_+$/.test(fileName)) {  
+        fileName = 'data.csv';
+    } else {
+        // add csv to end of filename
+        fileName += '.csv';
+    }
+    return fileName;
+}
+
+function sendCSV(response_type, fileName, csvData, res) {
+    // Check the response type to decide the format
+    if (response_type === 'file') {
+        res.setHeader('Content-Type', 'text/csv');
+        // for downloading
+        res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
+        res.setHeader('Cache-Control', 'no-store');
+        return res.status(200).send(csvData);
+    } else {
+        res.header('Content-Type', 'text/plain');
+        return res.status(299).send(csvData);
+    }
+}
+
+app.post('/export-data', (req, res) => {
+    let data, response_type, headers;
+    response_type, headers = bodyValidation(req.body);
+    data = convertToArray(req.body);
     
     //validate the array
     if (!Array.isArray(data) || data.length === 0 || typeof data[0] !== 'object') {
@@ -56,40 +102,10 @@ app.post('/export-data', (req, res) => {
         const options = { fields, header: headers};
         const json2csvParser = new Parser(options);
         const csvData = json2csvParser.parse(data);
-    
-        // Check the response type to decide the format
-        if (response_type === 'file') {
-            let checkFileName = (name) => {
-                //remove all invalid characters, restrict to lowercase chars
-                let checked = name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
-                return checked.replace(/^_+|_+$/g, ''); 
-            };
-            // to specify the filename
-            let fileName;
-
-            if (req.body.filename) {
-                fileName = checkFileName(req.body.filename);
-            } else {
-                fileName = 'data';
-            }
-            // if fileName not specified
-            if (!fileName || /^_+$/.test(fileName)) {  
-                fileName = 'data.csv';
-            } else {
-                // add csv to end of filename
-                fileName += '.csv';
-            }
-                res.setHeader('Content-Type', 'text/csv');
-                // for downloading
-                res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
-
-                res.setHeader('Cache-Control', 'no-store');
-                return res.status(200).send(csvData);
-            
-        } else {
-            res.header('Content-Type', 'text/plain');
-            return res.status(299).send(csvData);
-        }
+        // to specify the filename
+        let fileName;
+        fileName = fileNameValidation(req.body);
+        sendCSV(response_type, fileName, csvData, res);
     } catch (err) {
         console.error('Error while processing data:', err);
         res.status(500).send('An error occurred while processing the data.');
